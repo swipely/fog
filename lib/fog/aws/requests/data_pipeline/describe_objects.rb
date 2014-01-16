@@ -11,14 +11,15 @@ module Fog
         # * ObjectIds <~Array> - Identifiers of the pipeline objects that contain the definitions
         #                        to be described. You can pass as many as 25 identifiers in a
         #                        single call to DescribeObjects.
+        # * Options <~Hash> - A list of additional options described in the API docs.
         # ==== Returns
         # * response<~Excon::Response>:
         #   * body<~Hash>:
-        def describe_objects(id, objectIds)
+        def describe_objects(id, objectIds, opts={})
           params = {
             'pipelineId' => id,
             'objectIds' => objectIds,
-          }
+          }.merge(opts)
 
           response = request({
             :body => Fog::JSON.encode(params),
@@ -31,7 +32,7 @@ module Fog
       end
 
       class Mock
-        def describe_objects(id, objects)
+        def describe_objects(id, objects, opts={})
           Fog::Mock.not_implemented
         end
       end
